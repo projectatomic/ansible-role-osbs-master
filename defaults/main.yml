@@ -52,3 +52,6 @@ osbs_admin_groups: []
 
 # limit on the number of running pods
 osbs_master_max_pods: 3
+
+# update packagages to their latest version?
+osbs_update_packages: false
