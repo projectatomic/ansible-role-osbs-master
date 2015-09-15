@@ -1,0 +1,7 @@
+---
+osbs_openshift_home: /var/lib/openshift
+osbs_openshift_port: 8443
+osbs_kubeconfig_path: /etc/openshift/master/admin.kubeconfig
+
+osbs_environment:
+  KUBECONFIG: "{{ osbs_kubeconfig_path }}"
