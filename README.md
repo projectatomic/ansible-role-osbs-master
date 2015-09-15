@@ -1,5 +1,5 @@
-Role Name
-=========
+osbs-master
+===========
 
 Main role for deploying OSBS - [OpenShift build
 service](https://github.com/projectatomic/osbs-client/), service for building
