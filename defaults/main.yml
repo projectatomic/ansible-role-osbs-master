@@ -1,8 +1,10 @@
 ---
-## docker needs to know which registries are insecure
+# docker needs to know which registries are insecure
 osbs_docker_insecure_registries: []
 
-# XXX: TBW
+# Expose the OpenShift port to the outside world? Set this to false when using
+# authenticating proxy on the localhost. Has no effect if osbs_manage_firewalld
+# is false.
 osbs_master_expose_port: true
 
 # set to false if you don't use firewalld or do not want the playbook to modify it
