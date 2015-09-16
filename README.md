@@ -90,7 +90,10 @@ Limit on the number of running pods.
 Dependencies
 ------------
 
-OpenShift is expected to be installed on the remote host. TODO: refer to the roles for installing OpenShift.
+OpenShift is expected to be installed on the remote host. This can by
+accomplished by the
+[install-openshift](https://github.com/projectatomic/ansible-role-install-openshift)
+role.
 
 Example Playbook
 ----------------
@@ -99,7 +102,7 @@ Simple development deployment:
 
     - hosts: builders
       roles:
-        - osbs-install-openshift
+        - install-openshift
         - osbs-master
         - atomic-reactor
 
@@ -109,7 +112,7 @@ localhost:5000 even though it uses HTTP.
 
     - hosts: builders
       roles:
-        - osbs-install-openshift
+        - install-openshift
         - role: osbs-master
           osbs_master_expose_port: false
           osbs_docker_insecure_registries: [172.42.17.1:5000]
