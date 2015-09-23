@@ -5,7 +5,7 @@
   yum: name=docker state={{ osbs_update_packages | ternary('latest', 'present') }}
 
 - name: configure docker
-  template: src=sysconfig-docker.j2 dest=/etc/sysconfig/docker
+  template: src=sysconfig-docker.j2 dest=/etc/sysconfig/docker backup=yes
   notify: restart docker
 
 - name: ensure docker is running
