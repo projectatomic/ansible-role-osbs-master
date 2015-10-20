@@ -47,6 +47,7 @@ osbs_admin_groups: []
 #osbs_readwrite_users:
 #  - kojibuilder
 #  - "{{ ansible_hostname }}"
+#  - system:serviceaccount:default:default
 #osbs_admin_users:
 #  - foo@EXAMPLE.COM
 #  - bar@EXAMPLE.COM
