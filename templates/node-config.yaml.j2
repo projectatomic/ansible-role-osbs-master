@@ -1,16 +1,25 @@
-allowDisabledDocker: true
+allowDisabledDocker: false
 apiVersion: v1
+authConfig:
+  authenticationCacheSize: 1000
+  authenticationCacheTTL: 5m
+  authorizationCacheSize: 1000
+  authorizationCacheTTL: 5m
 dnsDomain: cluster.local
-dnsIP: {{ ansible_default_ipv4.address }}
+dnsIP: ""
 dockerConfig:
   execHandlerName: native
 imageConfig:
   format: openshift/origin-${component}:${version}
   latest: false
+iptablesSyncPeriod: 5s
 kind: NodeConfig
 masterKubeConfig: node.kubeconfig
-networkPluginName: ""
-nodeName: {{ ansible_fqdn }}
+networkConfig:
+  mtu: 1450
+  networkPluginName: ""
+nodeIP: ""
+nodeName: localhost
 podManifestConfig: null
 servingInfo:
   bindAddress: 0.0.0.0:10250
@@ -18,4 +27,5 @@ servingInfo:
   certFile: server.crt
   clientCA: node-client-ca.crt
   keyFile: server.key
-volumeDirectory: /var/lib/openshift/openshift.local.volumes
+  namedCertificates: null
+volumeDirectory: /var/lib/origin/openshift.local.volumes

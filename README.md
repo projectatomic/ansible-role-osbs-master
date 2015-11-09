@@ -38,10 +38,10 @@ it.
 
 If you are using authenticating proxy, this role can generate a self-signed certificate that the proxy can use to authenticate itself to OpenShift. The proxy needs the certificate and the key concatenated in one file (`osbs_proxy_cert_file`). OpenShift needs to know the CA of the certificate, which is configured in `osbs_proxy_ca_file` and which is the same as the certificate because it is self-signed.
 
-    osbs_proxy_cert_file: /etc/openshift/proxy_selfsigned.crt
-    osbs_proxy_key_file: /etc/openshift/proxy_selfsigned.key
+    osbs_proxy_cert_file: /etc/origin/proxy_selfsigned.crt
+    osbs_proxy_key_file: /etc/origin/proxy_selfsigned.key
     osbs_proxy_certkey_file: /etc/httpd/openshift_proxy_certkey.crt
-    osbs_proxy_ca_file: /etc/openshift/proxy_selfsigned.crt
+    osbs_proxy_ca_file: /etc/origin/proxy_selfsigned.crt
 
 OpenShift authorization policy - which users should be assigned the view
 (read-only), osbs-builder (read-write), and cluster-admin (admin) roles. In

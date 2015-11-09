@@ -21,27 +21,18 @@
     immediate: true
   when: osbs_manage_firewalld
 
-- name: apply modifications to /etc/sysconfig/openshift
-  copy: src=sysconfig-openshift-{{ item }} dest=/etc/sysconfig/openshift-{{ item }}
+- name: apply modifications to /etc/sysconfig/origin
+  copy: src=sysconfig-origin-{{ item }} dest=/etc/sysconfig/origin-{{ item }}
   with_items:
   - master
   - node
 
-- name: generate basic openshift configuration and certificates
-  command: openshift start --write-config=/etc/openshift
-  args:
-    chdir: "{{ osbs_openshift_home }}"
-    creates: /etc/openshift/node-{{ ansible_fqdn }}/node-config.yaml
-
-- name: link /etc/openshift/node to actual node directory
-  file: path=/etc/openshift/node src=/etc/openshift/node-{{ ansible_fqdn }} force=yes state=link
-
 - name: configure openshift master
-  template: src=master-config.yaml.j2 dest=/etc/openshift/master/master-config.yaml
+  template: src=master-config.yaml.j2 dest=/etc/origin/master/master-config.yaml
   notify: restart openshift-master
 
 - name: configure openshift node
-  template: src=node-config.yaml.j2 dest=/etc/openshift/node/node-config.yaml
+  template: src=node-config.yaml.j2 dest=/etc/origin/node/node-config.yaml
   notify: restart openshift-node
 
 - name: generate cert for authenticating proxy - self-signed certificate
@@ -67,7 +58,7 @@
 - meta: flush_handlers
 
 - name: ensure openshift is running
-  service: name=openshift-{{ item }} state=started enabled=yes
+  service: name=origin-{{ item }} state=started enabled=yes
   with_items:
   - master
   - node

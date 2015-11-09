@@ -11,12 +11,12 @@ osbs_master_expose_port: true
 osbs_manage_firewalld: true
 
 # these will be generated for proxy so it can authenticate itself
-osbs_proxy_cert_file: /etc/openshift/proxy_selfsigned.crt
-osbs_proxy_key_file: /etc/openshift/proxy_selfsigned.key
-osbs_proxy_certkey_file: /etc/openshift/proxy_certkey.crt
+osbs_proxy_cert_file: /etc/origin/proxy_selfsigned.crt
+osbs_proxy_key_file: /etc/origin/proxy_selfsigned.key
+osbs_proxy_certkey_file: /etc/origin/proxy_certkey.crt
 
 # CA cert to validate the proxy certificate against
-osbs_proxy_ca_file: /etc/openshift/proxy_selfsigned.crt
+osbs_proxy_ca_file: /etc/origin/proxy_selfsigned.crt
 
 # openshift authorization - which users should be assigned the view (readonly),
 # osbs-builder (readwrite), and cluster-admin (admin) roles
