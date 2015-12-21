@@ -1,0 +1,7 @@
+Alias "{{ osbs_export_http_path }}" "{{ osbs_export_dir }}"
+
+<Directory "{{ osbs_export_dir }}">
+    AllowOverride None
+    Require all granted
+    Options Indexes
+</Directory>

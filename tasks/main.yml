@@ -110,3 +110,6 @@
     dest: "{{ ansible_env.HOME }}/.bashrc"
     regexp: "export KUBECONFIG="
     line: "export KUBECONFIG={{ osbs_environment.KUBECONFIG }}"
+
+- include: export.yml
+  when: osbs_export_dir is defined
