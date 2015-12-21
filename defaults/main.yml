@@ -58,3 +58,14 @@ osbs_master_max_pods: 3
 
 # update packagages to their latest version?
 osbs_update_packages: false
+
+# directory for exporting v1 images to koji
+# if not defined, nothing will happen
+#osbs_export_dir: /mnt/image-export
+
+# mount the image export directory
+#osbs_export_mount_src: /dev/vda1
+#osbs_export_mount_fs: ext4
+
+# configure httpd to publish the directory under following path of default vhost
+#osbs_export_http_path: /image-export

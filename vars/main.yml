@@ -5,3 +5,5 @@ osbs_kubeconfig_path: /etc/openshift/master/admin.kubeconfig
 
 osbs_environment:
   KUBECONFIG: "{{ osbs_kubeconfig_path }}"
+
+osbs_export_http_conf: /etc/httpd/conf.d/osbs_image_export.conf
