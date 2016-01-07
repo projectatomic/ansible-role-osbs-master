@@ -69,3 +69,7 @@ osbs_update_packages: false
 
 # configure httpd to publish the directory under following path of default vhost
 #osbs_export_http_path: /image-export
+
+# if defined the role will install script that cleans up directories already
+# processed by koji
+#osbs_export_koji_hub: http://kojihub.example.com/kojihub

@@ -43,3 +43,14 @@
   - http
   - https
   when: osbs_export_http_path is defined and osbs_manage_firewalld
+
+- name: install dependencies for garbage collection script
+  action: "{{ ansible_pkg_mgr }} name=koji state=installed"
+  when: osbs_export_koji_hub is defined
+
+- name: install garbage collection script
+  template:
+    src: osbs-remove-finished-docker-tarball.py.j2
+    dest: /etc/cron.hourly/osbs-remove-finished-docker-tarball.cron
+    mode: "0744"
+  when: osbs_export_koji_hub is defined
