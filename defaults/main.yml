@@ -73,3 +73,6 @@ osbs_update_packages: false
 # if defined the role will install script that cleans up directories already
 # processed by koji
 #osbs_export_koji_hub: http://kojihub.example.com/kojihub
+#
+osbs_image_gc_high_threshold: 90
+osbs_image_gc_low_threshold: 80
