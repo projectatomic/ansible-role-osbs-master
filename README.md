@@ -18,13 +18,6 @@ and [issue tracker](https://github.com/projectatomic/ansible-osbs/issues).
 Role Variables
 --------------
 
-You may need to configure Docker to connect to registries over plain HTTP, or
-HTTPS with self-signed certificate (especially when developing OSBS). You can
-provide list of such registries in `osbs_docker_insecure_registries` (empty by
-default).
-
-    osbs_docker_insecure_registries: []
-
 Expose the OpenShift port to the outside world? Set this to `false` when using
 authenticating proxy on the localhost. Has no effect if `osbs_manage_firewalld`
 is `false`.
@@ -97,7 +90,10 @@ can be configured with following variables:
 Dependencies
 ------------
 
-OpenShift is expected to be installed on the remote host. This can by
+Docker is expected to be installed and configured (e.g. storage, insecure
+registries) on the remote host.
+
+OpenShift is expected to be installed on the remote host. This can be
 accomplished by the
 [install-openshift](https://github.com/projectatomic/ansible-role-install-openshift)
 role.
@@ -114,15 +110,13 @@ Simple development deployment:
         - atomic-reactor
 
 Deployment behind authentication proxy that only allows the *kojibuilder* user
-to start builds (and everyone to view them). Set docker to trust registry on
-localhost:5000 even though it uses HTTP.
+to start builds (and everyone to view them).
 
     - hosts: builders
       roles:
         - install-openshift
         - role: osbs-master
           osbs_master_expose_port: false
-          osbs_docker_insecure_registries: [172.42.17.1:5000]
           osbs_readonly_users: []
           osbs_readonly_groups:
             - system:authenticated

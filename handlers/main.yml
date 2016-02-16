@@ -1,7 +1,4 @@
 ---
-- name: restart docker
-  service: name=docker state=restarted
-
 - name: restart openshift-master
   service: name=origin-master state=restarted
 

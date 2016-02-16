@@ -1,7 +1,4 @@
 ---
-# docker needs to know which registries are insecure
-osbs_docker_insecure_registries: []
-
 # Expose the OpenShift port to the outside world? Set this to false when using
 # authenticating proxy on the localhost. Has no effect if osbs_manage_firewalld
 # is false.
