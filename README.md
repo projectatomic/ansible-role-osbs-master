@@ -97,7 +97,9 @@ Options for the request_header auth type.
       challenge: true
       login: true
 
-Options for the htpasswd_provider auth type.
+Options for the htpasswd_provider auth type. NOTE: You will need to create an
+htpasswd file and place it in the location of `provider_file` either by hand or
+via an ansible task for hosts that require it.
 
     osbs_identity_htpasswd:
       name: htpasswd_provider
