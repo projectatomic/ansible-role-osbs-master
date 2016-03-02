@@ -80,6 +80,32 @@ Limit on the number of running pods.
 
     osbs_master_max_pods: 3
 
+Changing the auth provider.
+
+    # Specify different identity providers and options needed for the master-config
+    # template
+    #
+    # Currently supported options are:
+    #   request_header
+    #   htpasswd_provider
+    osbs_identity_provider: "request_header"
+
+Options for the request_header auth type.
+
+    osbs_identity_request:
+      name: request_header
+      challenge: true
+      login: true
+
+Options for the htpasswd_provider auth type.
+
+    osbs_identity_htpasswd:
+      name: htpasswd_provider
+      challenge: true
+      login: true
+      provider_file: /etc/openshift/htpasswd
+
+
 [Image garbage
 collection](https://docs.openshift.org/latest/admin_guide/garbage_collection.html#image-garbage-collection)
 can be configured with following variables:
