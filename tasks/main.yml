@@ -32,6 +32,9 @@
   template: src=node-config.yaml.j2 dest=/etc/openshift/node/node-config.yaml
   notify: restart openshift-node
 
+- name: install openssl
+  action: "{{ ansible_pkg_mgr }} name=openssl state=installed"
+
 - name: generate cert for authenticating proxy - self-signed certificate
   command: >
     openssl req -new -nodes -x509
