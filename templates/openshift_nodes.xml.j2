@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<zone>
+  <short>OpenShift nodes</short>
+  <description>Ports needed by OpenShift clients connecting to master.</description>
+{% for node in osbs_nodes %}
+  <source address="{{ hostvars[node]['ansible_default_ipv4']['address'] }}"/>
+{% endfor %}
+  <port protocol="tcp" port="8443"/>
+</zone>
+

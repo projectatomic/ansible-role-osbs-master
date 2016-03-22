@@ -6,7 +6,7 @@ authConfig:
   authorizationCacheSize: 1000
   authorizationCacheTTL: 5m
 dnsDomain: cluster.local
-dnsIP: ""
+dnsIP: {{ ansible_default_ipv4.address }}
 dockerConfig:
   execHandlerName: native
 imageConfig:
@@ -19,7 +19,7 @@ networkConfig:
   mtu: 1450
   networkPluginName: ""
 nodeIP: ""
-nodeName: localhost
+nodeName: {{ item }}
 podManifestConfig: null
 servingInfo:
   bindAddress: 0.0.0.0:10250

@@ -1,13 +1,18 @@
 osbs-master
 ===========
 
-Main role for deploying OSBS - [OpenShift build
+Role for deploying OpenShift master as part of OSBS - [OpenShift build
 service](https://github.com/projectatomic/osbs-client/), service for building
 layered Docker images.
 
-It performs the necessary configuration of Docker and OpenShift and optionally
-opens/closes OpenShift firewall port. It also generates self-signed certificate
-that can be used by reverse proxy placed in front of the builder.
+It performs the necessary configuration OpenShift master, generates
+configuration for nodes, and opens/closes OpenShift firewall port. It also
+generates self-signed certificate that can be used by reverse proxy placed in
+front of the builder.
+
+The node configuration directories are tarred and copied to the ansible host
+where the [osbs-node
+role](https://github.com/projectatomic/ansible-role-osbs-node) can use them.
 
 This role is part of
 [ansible-osbs](https://github.com/projectatomic/ansible-osbs/) playbook for
@@ -29,7 +34,24 @@ it.
 
     osbs_manage_firewalld: true
 
-If you are using authenticating proxy, this role can generate a self-signed certificate that the proxy can use to authenticate itself to OpenShift. The proxy needs the certificate and the key concatenated in one file (`osbs_proxy_cert_file`). OpenShift needs to know the CA of the certificate, which is configured in `osbs_proxy_ca_file` and which is the same as the certificate because it is self-signed.
+The `osbs_nodes` is a list of FQDNs of OpenShift nodes for which configuration
+will be generated. It is suggested that the nodes are part of an ansible group
+and the variable is set to be `group['your_node_group_name']`. By default it
+contains only the master host, for easy one-host setup.
+
+    osbs_nodes: ["{{ inventory_hostname }}"]
+
+Configuration for nodes is generated on the master and then saven on the
+ansible host to a directory where the osbs-node role can use them.
+
+    osbs_node_config_dir: openshift-node-configs
+
+If you are using authenticating proxy, this role can generate a self-signed
+certificate that the proxy can use to authenticate itself to OpenShift. The
+proxy needs the certificate and the key concatenated in one file
+(`osbs_proxy_cert_file`). OpenShift needs to know the CA of the certificate,
+which is configured in `osbs_proxy_ca_file` and which is the same as the
+certificate because it is self-signed.
 
     osbs_proxy_cert_file: /etc/origin/proxy_selfsigned.crt
     osbs_proxy_key_file: /etc/origin/proxy_selfsigned.key
@@ -135,6 +157,7 @@ Simple development deployment:
       roles:
         - install-openshift
         - osbs-master
+        - osbs-node
         - atomic-reactor
 
 Deployment behind authentication proxy that only allows the *kojibuilder* user
@@ -154,6 +177,7 @@ to start builds (and everyone to view them).
             - kojibuilder
           osbs_admin_users: []
           osbs_admin_groups: []
+        - osbs-node
         - atomic-reactor
         - role: osbs-proxy
           osbs_proxy_type: kerberos
@@ -164,6 +188,22 @@ to start builds (and everyone to view them).
           osbs_proxy_ip_whitelist:
             - subnet: 192.168.66.0/24
               user: kojibuilder
+
+Simple deployment with multiple nodes:
+
+    - hosts: all
+      roles:
+        - install-openshift
+
+    - hosts: masters
+      roles:
+        - role: osbs-master
+          osbs_nodes: "{{ groups['nodes'] }}"
+
+    - hosts: nodes
+      roles:
+        - osbs-node
+        - atomic-reactor
 
 License
 -------
