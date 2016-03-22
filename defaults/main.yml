@@ -53,9 +53,6 @@ osbs_admin_groups: []
 # limit on the number of running pods
 osbs_master_max_pods: 3
 
-# update packagages to their latest version?
-osbs_update_packages: false
-
 # directory for exporting v1 images to koji
 # if not defined, nothing will happen
 #osbs_export_dir: /mnt/image-export
@@ -71,5 +68,11 @@ osbs_update_packages: false
 # processed by koji
 #osbs_export_koji_hub: http://kojihub.example.com/kojihub
 #
+
 osbs_image_gc_high_threshold: 90
 osbs_image_gc_low_threshold: 80
+
+osbs_nodes:
+  - "{{ inventory_hostname }}"
+
+osbs_node_config_dir: openshift-node-configs

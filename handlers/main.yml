@@ -2,8 +2,8 @@
 - name: restart openshift-master
   service: name=openshift-master state=restarted
 
-- name: restart openshift-node
-  service: name=openshift-node state=restarted
-
 - name: restart httpd
   service: name=httpd state=restarted
+
+- name: restart firewalld
+  service: name=firewalld state=restarted

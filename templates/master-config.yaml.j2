@@ -72,8 +72,7 @@ kubernetesMasterConfig:
   schedulerConfigFile: ""
   servicesNodePortRange: 30000-32767
   servicesSubnet: 172.30.0.0/16
-  staticNodeNames:
-  - {{ ansible_fqdn }}
+  staticNodeNames: null
 masterClients:
   externalKubernetesKubeConfig: ""
   openshiftLoopbackKubeConfig: openshift-master.kubeconfig
@@ -83,6 +82,7 @@ networkConfig:
   hostSubnetLength: 8
   networkPluginName: ""
 oauthConfig:
+  alwaysShowProviderSelection: false
   assetPublicURL: https://{{ ansible_default_ipv4.address }}:8443/console/
   grantConfig:
     method: auto
