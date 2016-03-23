@@ -39,15 +39,6 @@
     chdir: "{{ osbs_openshift_home }}"
     creates: /etc/openshift/master/master-config.yaml
 
-- name: generate basic openshift configuration and certificates
-  command: openshift start --write-config=/etc/openshift
-  args:
-    chdir: "{{ osbs_openshift_home }}"
-    creates: /etc/openshift/node-{{ ansible_fqdn }}/node-config.yaml
-
-- name: link /etc/openshift/node to actual node directory
-  file: path=/etc/openshift/node src=/etc/openshift/node-{{ ansible_fqdn }} force=yes state=link
-
 - name: configure openshift master
   template: src=master-config.yaml.j2 dest=/etc/openshift/master/master-config.yaml
   notify: restart openshift-master
