@@ -1,4 +1,4 @@
-OPTIONS="--loglevel=3"
+OPTIONS="--loglevel=5"
 CONFIG_FILE=/etc/openshift/master/master-config.yaml
 
 # Proxy configuration
