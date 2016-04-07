@@ -110,7 +110,11 @@
   - oc
 
 - name: import the osbs-builder role
-  command: oc replace --force=true --filename={{ osbs_openshift_home }}/role-osbs-builder.yml
+  command: >
+    oc replace
+    --namespace={{ osbs_namespace }}
+    --force=true
+    --filename={{ osbs_openshift_home }}/role-osbs-builder.yml
   environment: osbs_environment
   tags:
   - oc
@@ -134,7 +138,11 @@
   - oc
 
 - name: import the role bindings
-  command: oc replace --force=true --filename={{ osbs_openshift_home }}/rolebinding-{{ item }}.yml
+  command: >
+    oc replace
+    --namespace={{ osbs_namespace }}
+    --force=true
+    --filename={{ osbs_openshift_home }}/rolebinding-{{ item }}.yml
   environment: osbs_environment
   with_items:
   - osbs-readonly
@@ -149,7 +157,11 @@
   - oc
 
 - name: import resource quotas
-  command: oc replace --force=true --filename={{ osbs_openshift_home }}/resourcequota.yml
+  command: >
+    oc replace
+    --namespace={{ osbs_namespace }}
+    --force=true
+    --filename={{ osbs_openshift_home }}/resourcequota.yml
   environment: osbs_environment
   tags:
   - oc

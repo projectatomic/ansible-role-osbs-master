@@ -3,6 +3,8 @@ osbs_openshift_home: /var/lib/origin
 osbs_openshift_port: 8443
 osbs_kubeconfig_path: /etc/origin/master/admin.kubeconfig
 
+osbs_namespace: default
+
 osbs_environment:
   KUBECONFIG: "{{ osbs_kubeconfig_path }}"
 
