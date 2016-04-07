@@ -119,6 +119,23 @@
   tags:
   - oc
 
+- name: copy service accounts
+  template: src=openshift-serviceaccount.yml.j2 dest={{ osbs_openshift_home }}/serviceaccount-{{ item }}.yml
+  with_items: "{{ osbs_service_accounts }}"
+  tags:
+  - oc
+
+- name: import service accounts
+  command: >
+    oc create
+    --namespace={{ osbs_namespace }}
+    --filename={{ osbs_openshift_home }}/serviceaccount-{{ item }}.yml
+  register: service_account_import
+  failed_when: service_account_import.rc != 0 and ('already exists' not in service_account_import.stderr)
+  with_items: "{{ osbs_service_accounts }}"
+  tags:
+  - oc
+
 - name: copy role bindings
   template: src=openshift-rolebinding.yml.j2 dest={{ osbs_openshift_home }}/rolebinding-{{ item.name }}.yml
   with_items:
