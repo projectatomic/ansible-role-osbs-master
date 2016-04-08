@@ -104,21 +104,6 @@
 - name: wait for openshift to start accepting connections
   wait_for: port={{ osbs_openshift_port }} timeout=30
 
-- name: copy osbs-builder role definition
-  copy: src=openshift-role-osbs-builder.yml dest={{ osbs_openshift_home }}/role-osbs-builder.yml
-  tags:
-  - oc
-
-- name: import the osbs-builder role
-  command: >
-    oc replace
-    --namespace={{ osbs_namespace }}
-    --force=true
-    --filename={{ osbs_openshift_home }}/role-osbs-builder.yml
-  environment: osbs_environment
-  tags:
-  - oc
-
 - name: copy service accounts
   template: src=openshift-serviceaccount.yml.j2 dest={{ osbs_openshift_home }}/serviceaccount-{{ item }}.yml
   with_items: "{{ osbs_service_accounts }}"
@@ -144,7 +129,7 @@
     users: "{{ osbs_readonly_users }}"
     groups: "{{ osbs_readonly_groups }}"
   - name: osbs-readwrite
-    role: osbs-builder
+    role: edit
     users: "{{ osbs_readwrite_users }}"
     groups: "{{ osbs_readwrite_groups }}"
   - name: osbs-admin
