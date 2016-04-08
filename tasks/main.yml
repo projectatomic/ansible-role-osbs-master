@@ -155,8 +155,10 @@
 
 - name: copy resource quotas
   template: src=openshift-resourcequota.yml.j2 dest={{ osbs_openshift_home }}/resourcequota.yml
+  when: osbs_master_max_pods is defined and osbs_master_max_pods >= 0
   tags:
   - oc
+  - resourcequotas
 
 - name: import resource quotas
   command: >
@@ -165,8 +167,22 @@
     --force=true
     --filename={{ osbs_openshift_home }}/resourcequota.yml
   environment: osbs_environment
+  when: osbs_master_max_pods is defined and osbs_master_max_pods >= 0
   tags:
   - oc
+  - resourcequotas
+
+- name: delete resource quotas
+  command: >
+    oc delete
+    --namespace={{ osbs_namespace }}
+    --ignore-not-found=true
+    resourcequota concurrentbuilds
+  environment: osbs_environment
+  when: osbs_master_max_pods is not defined or osbs_master_max_pods < 0
+  tags:
+  - oc
+  - resourcequotas
 
 # Useful when using "oc" to inspect openshift state.
 - name: add KUBECONFIG to .bashrc

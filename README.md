@@ -98,7 +98,7 @@ Example production configuration with only one user starting the builds:
       - bar@EXAMPLE.COM
     osbs_admin_groups: []
 
-Limit on the number of running pods.
+Limit on the number of running pods. Undefine or set to -1 to remove limit.
 
     osbs_master_max_pods: 3
 

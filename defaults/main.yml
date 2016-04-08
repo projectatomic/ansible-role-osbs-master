@@ -63,8 +63,8 @@ osbs_admin_groups: []
 #  - bar@EXAMPLE.COM
 #osbs_admin_groups: []
 
-# limit on the number of running pods
-osbs_master_max_pods: 3
+# limit on the number of running pods - undefine or set to -1 to remove limit
+#osbs_master_max_pods: 3
 
 # directory for exporting v1 images to koji
 # if not defined, nothing will happen
