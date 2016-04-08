@@ -148,7 +148,7 @@
     users: "{{ osbs_readwrite_users }}"
     groups: "{{ osbs_readwrite_groups }}"
   - name: osbs-admin
-    role: cluster-admin
+    role: admin
     users: "{{ osbs_admin_users }}"
     groups: "{{ osbs_admin_groups }}"
   tags:
