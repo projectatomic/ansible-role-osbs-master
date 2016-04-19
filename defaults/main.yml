@@ -22,8 +22,8 @@ osbs_readonly_users: []
 osbs_readonly_groups: []
 osbs_readwrite_users: []
 osbs_readwrite_groups:
-  - system:authenticated
-  - system:unauthenticated
+- system:authenticated
+- system:unauthenticated
 osbs_admin_users: []
 osbs_admin_groups: []
 
@@ -73,6 +73,6 @@ osbs_image_gc_high_threshold: 90
 osbs_image_gc_low_threshold: 80
 
 osbs_nodes:
-  - "{{ inventory_hostname }}"
+- "{{ inventory_hostname }}"
 
 osbs_node_config_dir: openshift-node-configs

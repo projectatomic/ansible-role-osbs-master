@@ -10,7 +10,7 @@ userNames: []
 {% else %}
 userNames:
 {% for u in item.users %}
-- {{u}}
+- {{ u }}
 {% endfor %}
 {% endif %}
 
@@ -19,6 +19,6 @@ groupNames: []
 {% else %}
 groupNames:
 {% for g in item.groups %}
-- {{g}}
+- {{ g }}
 {% endfor %}
 {% endif %}
