@@ -88,7 +88,7 @@ kubernetesMasterConfig:
   disabledAPIGroupVersions: {}
   masterCount: 1
   masterIP: {{ ansible_default_ipv4.address }}
-  podEvictionTimeout: 5m
+  podEvictionTimeout: {{ osbs_master_pod_eviction_timeout }}
   proxyClientInfo:
     certFile: master.proxy-client.crt
     keyFile: master.proxy-client.key
