@@ -68,7 +68,7 @@ kubernetesMasterConfig:
   controllerArguments: null
   masterCount: 1
   masterIP: {{ ansible_default_ipv4.address }}
-  podEvictionTimeout: 5m
+  podEvictionTimeout: {{ osbs_master_pod_eviction_timeout }}
   schedulerConfigFile: ""
   servicesNodePortRange: 30000-32767
   servicesSubnet: 172.30.0.0/16

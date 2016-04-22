@@ -56,6 +56,9 @@ osbs_master_max_pods: 3
 # update packagages to their latest version?
 osbs_update_packages: false
 
+# grace period for deleting pods on failed nodes
+osbs_master_pod_eviction_timeout: 5m
+
 # directory for exporting v1 images to koji
 # if not defined, nothing will happen
 #osbs_export_dir: /mnt/image-export
