@@ -96,7 +96,8 @@
   - concatenate cert and key
 
 # We need to have openshift restarted in order to configure authentication.
-- meta: flush_handlers
+- name: run handlers in order to set up openshift auth
+  meta: flush_handlers
 
 - name: ensure openshift is running
   service: name=origin-master state=started enabled=yes
