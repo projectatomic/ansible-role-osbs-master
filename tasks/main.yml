@@ -110,6 +110,7 @@
 - name: copy service accounts
   template: src=openshift-serviceaccount.yml.j2 dest={{ osbs_openshift_home }}/serviceaccount-{{ item }}.yml
   with_items: "{{ osbs_service_accounts }}"
+  register: yaml_sa
   tags:
   - oc
 
@@ -117,10 +118,11 @@
   command: >
     oc create
     --namespace={{ osbs_namespace }}
-    --filename={{ osbs_openshift_home }}/serviceaccount-{{ item }}.yml
+    --filename={{ osbs_openshift_home }}/serviceaccount-{{ item.item }}.yml
   register: service_account_import
   failed_when: service_account_import.rc != 0 and ('already exists' not in service_account_import.stderr)
-  with_items: "{{ osbs_service_accounts }}"
+  with_items: "{{ yaml_sa.results }}"
+  when: item.changed
   tags:
   - oc
 
@@ -139,6 +141,7 @@
     role: admin
     users: "{{ osbs_admin_users }}"
     groups: "{{ osbs_admin_groups }}"
+  register: yaml_rolebindings
   tags:
   - oc
 
@@ -147,18 +150,17 @@
     oc replace
     --namespace={{ osbs_namespace }}
     --force=true
-    --filename={{ osbs_openshift_home }}/rolebinding-{{ item }}.yml
+    --filename={{ osbs_openshift_home }}/rolebinding-{{ item.item.name }}.yml
   environment: osbs_environment
-  with_items:
-  - osbs-readonly
-  - osbs-readwrite
-  - osbs-admin
+  with_items: "{{ yaml_rolebindings.results }}"
+  when: item.changed
   tags:
   - oc
 
 - name: copy resource quotas
   template: src=openshift-resourcequota.yml.j2 dest={{ osbs_openshift_home }}/resourcequota.yml
   when: osbs_master_max_pods is defined and osbs_master_max_pods >= 0
+  register: yaml_resourcequotas
   tags:
   - oc
   - resourcequotas
@@ -170,7 +172,7 @@
     --force=true
     --filename={{ osbs_openshift_home }}/resourcequota.yml
   environment: osbs_environment
-  when: osbs_master_max_pods is defined and osbs_master_max_pods >= 0
+  when: osbs_master_max_pods is defined and osbs_master_max_pods >= 0 and yaml_resourcequotas.changed
   tags:
   - oc
   - resourcequotas
