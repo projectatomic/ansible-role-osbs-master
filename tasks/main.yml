@@ -109,10 +109,12 @@
 
 - name: copy osbs-builder role definition
   copy: src=openshift-role-osbs-builder.yml dest={{ osbs_openshift_home }}/role-osbs-builder.yml
+  register: yaml_role
 
 - name: import the osbs-builder role
   command: oc replace --force=true --filename={{ osbs_openshift_home }}/role-osbs-builder.yml
   environment: osbs_environment
+  when: yaml_role.changed
 
 - name: copy role bindings
   template: src=openshift-rolebinding.yml.j2 dest={{ osbs_openshift_home }}/rolebinding-{{ item.name }}.yml
@@ -129,20 +131,21 @@
     role: cluster-admin
     users: "{{ osbs_admin_users }}"
     groups: "{{ osbs_admin_groups }}"
+  register: yaml_rolebindings
 
 - name: import the role bindings
-  command: oc replace --force=true --filename={{ osbs_openshift_home }}/rolebinding-{{ item }}.yml
+  command: oc replace --force=true --filename={{ osbs_openshift_home }}/rolebinding-{{ item.item.name }}.yml
   environment: osbs_environment
-  with_items:
-  - osbs-readonly
-  - osbs-readwrite
-  - osbs-admin
+  with_items: "{{ yaml_rolebindings.results }}"
+  when: item.changed
 
 - name: copy resource quotas
   template: src=openshift-resourcequota.yml.j2 dest={{ osbs_openshift_home }}/resourcequota.yml
+  register: yaml_resourcequotas
 
 - name: import resource quotas
   command: oc replace --force=true --filename={{ osbs_openshift_home }}/resourcequota.yml
+  when: yaml_resourcequotas.changed
   environment: osbs_environment
 
 # Useful when using "oc" to inspect openshift state.
