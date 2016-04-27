@@ -63,12 +63,14 @@
 - name: configure openshift nodes
   template: src=node-config.yaml.j2 dest=/etc/openshift/node-{{ item }}/node-config.yaml
   with_items: "{{ osbs_nodes }}"
+  register: node_config
 
 - name: tar up node configuration
-  command: tar cJf node-{{ item }}.tar.xz node-{{ item }}
+  command: tar cJf node-{{ item.item }}.tar.xz node-{{ item.item }}
   args:
     chdir: /etc/openshift
-  with_items: "{{ osbs_nodes }}"
+  with_items: "{{ node_config.results }}"
+  when: item.changed
 
 - name: copy node configs to the ansible host
   fetch:
