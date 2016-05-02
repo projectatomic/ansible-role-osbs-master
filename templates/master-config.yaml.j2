@@ -34,6 +34,7 @@ corsAllowedOrigins:
 - localhost
 disabledFeatures: null
 dnsConfig:
+  allowRecursiveQueries: false
   bindAddress: 0.0.0.0:53
   bindNetwork: tcp4
 etcdClientInfo:
@@ -101,8 +102,8 @@ masterClients:
   openshiftLoopbackKubeConfig: openshift-master.kubeconfig
 masterPublicURL: https://{{ ansible_default_ipv4.address }}:8443
 networkConfig:
-  clusterNetworkCIDR: 10.1.0.0/16
-  hostSubnetLength: 8
+  clusterNetworkCIDR: 10.128.0.0/14
+  hostSubnetLength: 9
   networkPluginName: ""
   serviceNetworkCIDR: 172.30.0.0/16
 oauthConfig:
@@ -145,6 +146,9 @@ oauthConfig:
 pauseControllers: false
 policyConfig:
   bootstrapPolicyFile: policy.json
+  legacyClientPolicyConfig:
+    legacyClientPolicy: allow-all
+    restrictedHTTPVerbs: null
   openshiftInfrastructureNamespace: openshift-infra
   openshiftSharedResourcesNamespace: openshift
 projectConfig:
@@ -163,7 +167,7 @@ serviceAccountConfig:
   - default
   - builder
   - deployer
-  masterCA: ca.crt
+  masterCA: ca-bundle.crt
   privateKeyFile: serviceaccounts.private.key
   publicKeyFiles:
   - serviceaccounts.public.key
