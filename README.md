@@ -102,6 +102,10 @@ Limit on the number of running pods. Undefine or set to -1 to remove limit.
 
     osbs_master_max_pods: 3
 
+OpenShift master log level (0-5).
+
+    osbs_master_log_level: 3
+
 Changing the auth provider.
 
     # Specify different identity providers and options needed for the master-config
