@@ -121,7 +121,7 @@
     --filename={{ osbs_openshift_home }}/serviceaccount-{{ item.item }}.yml
   register: service_account_import
   failed_when: service_account_import.rc != 0 and ('already exists' not in service_account_import.stderr)
-  with_items: "{{ yaml_sa.results }}"
+  with_items: "{{ yaml_sa.results | default([]) }}"
   when: item.changed
   tags:
   - oc
