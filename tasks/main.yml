@@ -198,3 +198,6 @@
 
 - include: export.yml
   when: osbs_export_dir is defined
+
+- include: yum_proxy.yml
+  when: osbs_yum_proxy_image is defined

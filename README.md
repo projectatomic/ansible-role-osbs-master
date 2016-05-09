@@ -133,13 +133,19 @@ via an ansible task for hosts that require it.
       login: true
       provider_file: /etc/openshift/htpasswd
 
-
 [Image garbage
 collection](https://docs.openshift.org/latest/admin_guide/garbage_collection.html#image-garbage-collection)
 can be configured with following variables:
 
     osbs_image_gc_high_threshold: 90
     osbs_image_gc_low_threshold: 80
+
+Deploy yum proxy from a docker image (disabled by default). Variable
+`osbs_yum_proxy_name` sets the name of the deploymentconfig/service OpenShift
+objects.
+
+    osbs_yum_proxy_image: docker.io/vrutkovs/docker-squid
+    osbs_yum_proxy_name: yum-proxy
 
 Dependencies
 ------------

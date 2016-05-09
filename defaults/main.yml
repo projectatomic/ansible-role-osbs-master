@@ -86,7 +86,10 @@ osbs_master_pod_eviction_timeout: 5m
 # if defined the role will install script that cleans up directories already
 # processed by koji
 #osbs_export_koji_hub: http://kojihub.example.com/kojihub
-#
+
+# if defined, yum proxy will be deployed in the cluster from the given image
+#osbs_yum_proxy_image: docker.io/vrutkovs/docker-squid
+osbs_yum_proxy_name: yum-proxy
 
 osbs_image_gc_high_threshold: 90
 osbs_image_gc_low_threshold: 80
