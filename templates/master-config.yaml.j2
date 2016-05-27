@@ -106,9 +106,13 @@ masterClients:
   openshiftLoopbackKubeConfig: openshift-master.kubeconfig
 masterPublicURL: https://{{ ansible_default_ipv4.address }}:8443
 networkConfig:
-  clusterNetworkCIDR: 10.128.0.0/14
+  clusterNetworkCIDR: {{ osbs_openshift_sdn_clusternetwork }}
   hostSubnetLength: 9
+{% if osbs_openshift_sdn %}
+  networkPluginName: "redhat/openshift-ovs-subnet"
+{% else %}
   networkPluginName: ""
+{% endif %}
   serviceNetworkCIDR: 172.30.0.0/16
 oauthConfig:
   alwaysShowProviderSelection: false

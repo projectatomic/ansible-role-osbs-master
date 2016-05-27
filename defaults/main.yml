@@ -137,3 +137,6 @@ osbs_nodes:
 - "{{ inventory_hostname }}"
 
 osbs_node_config_dir: openshift-node-configs
+
+osbs_openshift_sdn: false
+osbs_openshift_sdn_clusternetwork: 10.128.0.0/14

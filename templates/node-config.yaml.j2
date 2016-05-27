@@ -21,7 +21,11 @@ kind: NodeConfig
 masterKubeConfig: node.kubeconfig
 networkConfig:
   mtu: 1450
+{% if osbs_openshift_sdn %}
+  networkPluginName: "redhat/openshift-ovs-subnet"
+{% else %}
   networkPluginName: ""
+{% endif %}
 nodeIP: ""
 nodeName: {{ item }}
 podManifestConfig: null
