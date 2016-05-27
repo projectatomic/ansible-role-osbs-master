@@ -140,3 +140,4 @@ osbs_node_config_dir: openshift-node-configs
 
 osbs_openshift_sdn: false
 osbs_openshift_sdn_clusternetwork: 10.128.0.0/14
+#osbs_master_cpu_limitrange: 650m

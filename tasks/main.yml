@@ -195,6 +195,37 @@
   - oc
   - resourcequotas
 
+- name: copy cpu limitrange
+  template:
+    src: openshift-limitrange.yml.j2
+    dest: "{{ osbs_openshift_home }}/limitrange.yml"
+  when: osbs_master_cpu_limitrange is defined and osbs_master_cpu_limitrange
+  register: yaml_limitrange
+  tags:
+  - oc
+
+- name: import cpu limitrange
+  command: >
+    oc replace
+    --namespace={{ osbs_namespace }}
+    --force=true
+    --filename={{ osbs_openshift_home }}/limitrange.yml
+  environment: osbs_environment
+  when: osbs_master_cpu_limitrange is defined and osbs_master_cpu_limitrange and yaml_limitrange.changed
+  tags:
+  - oc
+
+- name: delete cpu limitrange
+  command: >
+    oc delete
+    --namespace={{ osbs_namespace }}
+    --ignore-not-found=true
+    limitrange cpureq
+  environment: osbs_environment
+  when: osbs_master_cpu_limitrange is not defined or not osbs_master_cpu_limitrange
+  tags:
+  - oc
+
 # Useful when using "oc" to inspect openshift state.
 - name: add KUBECONFIG to .bashrc
   lineinfile:
