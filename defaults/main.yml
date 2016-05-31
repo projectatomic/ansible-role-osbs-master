@@ -3,7 +3,11 @@ osbs_openshift_home: /var/lib/origin
 osbs_openshift_port: 8443
 osbs_kubeconfig_path: /etc/origin/master/admin.kubeconfig
 
+# either origin or atomic-openshift
+osbs_deployment_type: origin
+
 osbs_namespace: default
+osbs_namespace_create: false
 
 osbs_environment:
   KUBECONFIG: "{{ osbs_kubeconfig_path }}"
@@ -134,3 +138,9 @@ osbs_nodes:
 - "{{ inventory_hostname }}"
 
 osbs_node_config_dir: openshift-node-configs
+
+osbs_docker_registry: false
+osbs_docker_registry_storage: /opt/openshift-registry
+osbs_openshift_sdn: false
+osbs_openshift_sdn_clusternetwork: 10.128.0.0/14
+#osbs_master_cpu_limitrange: 650m

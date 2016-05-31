@@ -10,14 +10,22 @@ dnsIP: {{ ansible_default_ipv4.address }}
 dockerConfig:
   execHandlerName: native
 imageConfig:
+{% if osbs_deployment_type == "origin" %}
   format: openshift/origin-${component}:${version}
+{% else %}
+  format: openshift3/ose-${component}:${version}
+{% endif %}
   latest: false
 iptablesSyncPeriod: 5s
 kind: NodeConfig
 masterKubeConfig: node.kubeconfig
 networkConfig:
   mtu: 1450
+{% if osbs_openshift_sdn %}
+  networkPluginName: "redhat/openshift-ovs-subnet"
+{% else %}
   networkPluginName: ""
+{% endif %}
 nodeIP: ""
 nodeName: {{ item }}
 podManifestConfig: null

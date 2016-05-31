@@ -1,6 +1,8 @@
 ---
 - name: restart openshift-master
-  service: name=origin-master state=restarted
+  service:
+    name: "{{ osbs_deployment_type }}-master"
+    state: restarted
 
 - name: restart httpd
   service: name=httpd state=restarted
