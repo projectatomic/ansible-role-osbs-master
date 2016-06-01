@@ -12,7 +12,7 @@
 - name: import registry service account
   command: >
     oc create
-    --namespace={{ osbs_namespace }}
+    --namespace=default
     --filename={{ osbs_openshift_home }}/serviceaccount-{{ item.item }}.yml
   register: service_account_import
   failed_when: service_account_import.rc != 0 and ('already exists' not in service_account_import.stderr)
@@ -25,6 +25,7 @@
 - name: make registry serviceaccount privileged
   command: >
     oadm policy
+    --namespace=default
     add-scc-to-user
     privileged -z registry
   environment: osbs_environment
@@ -42,6 +43,7 @@
 - name: set up internal registry
   command: >
     oadm registry
+    --namespace=default
     --service-account registry
     --credentials /etc/origin/master/openshift-registry.kubeconfig
     --mount-host {{ osbs_docker_registry_storage }}
