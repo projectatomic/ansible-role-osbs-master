@@ -214,6 +214,7 @@
   register: yaml_limitrange
   tags:
   - oc
+  - limitranges
 
 - name: import cpu limitrange
   command: >
@@ -225,6 +226,7 @@
   when: osbs_master_cpu_limitrange is defined and osbs_master_cpu_limitrange and yaml_limitrange.changed
   tags:
   - oc
+  - limitranges
 
 - name: delete cpu limitrange
   command: >
@@ -236,6 +238,7 @@
   when: osbs_master_cpu_limitrange is not defined or not osbs_master_cpu_limitrange
   tags:
   - oc
+  - limitranges
 
 # Useful when using "oc" to inspect openshift state.
 - name: add KUBECONFIG to .bashrc
