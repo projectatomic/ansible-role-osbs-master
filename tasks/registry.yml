@@ -16,7 +16,7 @@
     --filename={{ osbs_openshift_home }}/serviceaccount-{{ item.item }}.yml
   register: service_account_import
   failed_when: service_account_import.rc != 0 and ('already exists' not in service_account_import.stderr)
-  environment: osbs_environment
+  environment: "{{osbs_environment}}"
   with_items: "{{ yaml_sa.results | default([]) }}"
   when: item.changed
   tags:
@@ -28,7 +28,7 @@
     --namespace=default
     add-scc-to-user
     privileged -z registry
-  environment: osbs_environment
+  environment: "{{osbs_environment}}"
   tags:
   - oc
 
@@ -49,6 +49,6 @@
     --mount-host {{ osbs_docker_registry_storage }}
   register: create_registry
   changed_when: "'service exists' not in create_registry.stdout"
-  environment: osbs_environment
+  environment: "{{osbs_environment}}"
   tags:
   - oc
